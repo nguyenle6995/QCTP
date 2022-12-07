@@ -28,11 +28,11 @@ public class TASUtils {
 	}
 
 	public static String getServerUrl() {
-		return "http://202.20.84.128:7110/opuscntr";
+		return "https://blueprint-test.cyberlogitec.com.vn/";
 	}
 
 	public static String getDirectUrl(String currentUrl, String directUrl) {
-		String findPath = "/opuscntr/";
+		String findPath = "https://blueprint-test.cyberlogitec.com.vn/";
 		int idx = currentUrl.indexOf(findPath);
 		String changeUrl = currentUrl.substring(0, idx).concat(findPath).concat(directUrl);
 		return changeUrl;

@@ -13,7 +13,7 @@ public class MainMenuPage {
 	}
 	
 	public boolean compareUrl(String currentUrl, String pageUrl) {
-		String tempUrl = currentUrl.replace("/opuscntr/", "@");
+		String tempUrl = currentUrl.replace("https://blueprint-test.cyberlogitec.com.vn/", "@");
 		int index = tempUrl.indexOf("@");
 		currentUrl = tempUrl.substring(index+1);
 		

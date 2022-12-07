@@ -4,70 +4,50 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SignOnPage {
 
-	@FindBy(css = "#j_username")
-	private WebElement userIdElement;
+	// username
+	@FindBy(id = "username")
+	private WebElement usernameTxt;
 
-	@FindBy(css = "#j_password")
-	private WebElement userPasswdElement;
+	// password
+	@FindBy(id = "password")
+	private WebElement passwordTxt;
 
-	@FindBy(css = "#login_form > button")
-	private WebElement btnMainLogInElement;
+	// button login
+	@FindBy(id = "submit-btn")
+	private WebElement loginBtn;
 
-	@FindBy(css = "#logout_form > span")
-	private WebElement btnUserPreferElement;
-
-	@FindBy(css = "#logout_form > div > select")
-	private WebElement userOffice;
-
-	@FindBy(css = "body > div > ul > li.login_gnb_05")
-	private WebElement menuVesselOprElement;
+	// userImg
+	@FindBy(id = "menu-user-image")
+	private WebElement userImg;
 
 	WebDriver driver;
 
 	public SignOnPage(WebDriver driver_p) {
 		driver = driver_p;
 	}
-	public boolean login(String userName, String passWord, String office, String displayName) {
+
+	public boolean login(String userName, String password) {
 		boolean booleanReturn = false;
-
-		// loginElement.click();
-		userIdElement.click();
-		userIdElement.sendKeys(userName);
-		TASUtils.sleep(500);
-
-		userPasswdElement.click();
-		userPasswdElement.sendKeys(passWord);
-		TASUtils.sleep(500);
-
-		btnMainLogInElement.click();
-		TASUtils.sleep(500);
-
-		if (btnUserPreferElement.isDisplayed()) {
-			String loginName = btnUserPreferElement.getText();
-			if (loginName.equals(displayName)) {
-
-				Select selOfcObj = new Select(userOffice);
-				if (selOfcObj.getAllSelectedOptions().get(0).getText() != office) {
-					selOfcObj.selectByValue(office);
-					try {
-						driver.switchTo().alert().accept();
-					} catch (Exception e) {
-						// e.printStackTrace();
-					}
-				}
-				booleanReturn = true;
-			}
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		usernameTxt.sendKeys(userName);
+		passwordTxt.sendKeys(password);
+		loginBtn.click();
+		wait.until(ExpectedConditions.visibilityOf(userImg));
+		if (userImg.isDisplayed()) {
+			booleanReturn = true;
 		}
-
 		return booleanReturn;
 	}
-	@Test
+
 	public WebDriver getWebDriverForDirectUrl(String url) {
-		TASUtils.sleep(5000);;
+		TASUtils.sleep(5000);
+		;
 		String changeDirectUrl = TASUtils.getDirectUrl(driver.getCurrentUrl(), url);
 		driver.get(changeDirectUrl);
 		return driver;
